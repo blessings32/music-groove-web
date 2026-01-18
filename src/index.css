@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	height: 100vh;
+	width: 100vw;
+	border: 1px solid red;
+}
+#root {
+	height: 100vh;
+	width: 100vw;
+}
