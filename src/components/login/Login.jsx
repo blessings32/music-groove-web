@@ -7,11 +7,20 @@ const loginUser = async (credentials) => {
 };
 
 const Login = () => {
-  let [count, setCount] = useState(0);
-  const setCounter = (e) => {
-    e.preventDefault();
-    count === 0 ? (count = 1) : (count = 0);
+  let [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: "",
+  });
+  let [mode, setMode] = useState(true);
+
+  const loginButtonClick = () => {
+    setMode(false);
   };
+
+  const registerButtonClick = () => {
+    setMode(true);
+  };
+
   const handleSumbtLogin = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -31,7 +40,7 @@ const Login = () => {
       });
     console.log(credentials);
   };
-  if (count == 0) {
+  if (mode == true) {
     return (
       <div className="w-full h-full bg-slate-950 justify-center flex flex-row py-44">
         <form
@@ -44,7 +53,11 @@ const Login = () => {
           <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
             <i className="fas fa-user absolute text-md left-2 bottom-3"></i>
             <input
-              className=" bg-transparent h-full w-11/12 float-right rounded-lg"
+              value={loginDetails.username}
+              onChange={(e) => {
+                setLoginDetails({ ...loginDetails, username: e.target.value });
+              }}
+              className=" bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="text"
               id="login-username"
               name="username"
@@ -55,7 +68,11 @@ const Login = () => {
           <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
             <i className="fas fa-lock absolute text-md left-2 bottom-3"></i>
             <input
-              className="bg-transparent h-full w-11/12 float-right rounded-lg"
+              value={loginDetails.password}
+              onChange={(e) => {
+                setLoginDetails({ ...loginDetails, password: e.target.value });
+              }}
+              className="bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="password"
               id="login-password"
               name="password"
@@ -74,7 +91,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => {
-                setCount(setCounter);
+                loginButtonClick();
               }}
               className="underline "
             >
@@ -84,15 +101,18 @@ const Login = () => {
         </form>
       </div>
     );
-  }
-  if (count === 1) {
+  } else if (mode == false) {
     return (
       <div className="w-full h-full bg-slate-950 justify-center flex flex-row py-44">
-        <form id="registerForm" className="hidden">
-          <h2>Register</h2>
-          <div className="input-wrapper">
-            <i className="fas fa-user"></i>
+        <form
+          id="registerForm"
+          className="w-1/3 pt-11 justify-center flex flex-row flex-wrap bg-slate-900 shadow-sm shadow-slate-800 rounded-lg"
+        >
+          <h2 className="w-full text-white text-xl text-center">Register</h2>
+          <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
+            <i className="fas fa-user absolute text-md left-2 bottom-3"></i>
             <input
+              className="bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="text"
               id="register-username"
               name="username"
@@ -100,9 +120,10 @@ const Login = () => {
               required
             />
           </div>
-          <div className="input-wrapper">
-            <i className="fas fa-envelope"></i>
+          <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
+            <i className="fas fa-envelope absolute text-md left-2 bottom-3"></i>
             <input
+              className="bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="email"
               id="register-email"
               name="email"
@@ -110,9 +131,10 @@ const Login = () => {
               required
             />
           </div>
-          <div className="input-wrapper">
-            <i className="fas fa-lock"></i>
+          <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
+            <i className="fas fa-lock absolute text-md left-2 bottom-3"></i>
             <input
+              className="bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="password"
               id="register-password"
               name="password"
@@ -120,9 +142,10 @@ const Login = () => {
               required
             />
           </div>
-          <div className="input-wrapper">
-            <i className="fas fa-lock"></i>
+          <div className="relative bg-slate-100 w-8/12 h-10 rounded-lg">
+            <i className="fas fa-lock absolute text-md left-2 bottom-3"></i>
             <input
+              className="bg-transparent h-full w-full pl-8 float-right rounded-lg"
               type="password"
               id="register-confirm-password"
               name="confirmPassword"
@@ -130,12 +153,23 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit">Register</button>
-          <p>
-            Already have an account?
-            <a href="#" onclick="showLogin();return false;">
+          <button
+            type="submit"
+            className="w-8/12 bg-purple-800 text-xl text-white font-semibold rounded-md h-11"
+          >
+            Register
+          </button>
+          <p className="text-white">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => {
+                registerButtonClick();
+              }}
+              className="underline"
+            >
               Login here
-            </a>
+            </button>
           </p>
         </form>
       </div>
