@@ -2,6 +2,11 @@
 dist/
 .vite/
 
+/images
+/Music
+/public/images
+/public/images8
+
 # Dependencies
 node_modules/
 package-lock.json

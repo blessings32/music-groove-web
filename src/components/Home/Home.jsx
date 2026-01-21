@@ -1,11 +1,11 @@
-import React from "react";
 import Trackard from "../reusable/trackCard.jsx";
-import axios from "axios";
+import axios from "../../lib/axios.js";
 
-const url = import.meta.env.VITE_SERVER_URL + "api/tracks/suggested";
-const responce = await axios.get(url);
-console.log(responce.data.data);
-function Home() {
+const Home = async () => {
+  const responce = await axios.get("api/tracks/suggested");
+  const res = await axios.get("api/tracks/recents");
+  const suggestedTracks = responce.data.data;
+  console.log(res);
   return (
     <div className="h-full w-full bg-slate-950 flex flex-col space-y-4 p-6 pb-2">
       <div className=" h-[86%] w-full flex flex-row space-x-4 p-1">
@@ -38,9 +38,11 @@ function Home() {
           {/*below are sections suggested tracks, lecent played, suggested playlist, artist*/}
           <div className="w-full h-[calc(100%-3.5rem)] overflow-y-scroll p-4">
             <div className="flex flex-row gap-5 overflow-x-scroll">
-              <Trackard CardType="suggestion" />
-              <Trackard CardType="suggestion" />
-              <Trackard CardType="suggestion" />
+              {suggestedTracks.map((track) => {
+                return (
+                  <Trackard key={track.id} CardType="suggestion" {...track} />
+                );
+              })}
             </div>
             <div>
               <h1 className="text-xl text-gray-300 pb-4">Recent Plays {">"}</h1>
@@ -64,6 +66,6 @@ function Home() {
       <div className=" bg-gray-900 h-[14%] w-full rounded-md"></div>
     </div>
   );
-}
+};
 
 export default Home;
