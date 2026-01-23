@@ -31,10 +31,10 @@ function trackCard(props) {
     );
   } else if (CardType === "recent") {
     return (
-      <div className="relative h-48 w-36 cursor-pointer group mix-blend-screen ">
+      <div className="relative h-56 w-36 cursor-pointer group mix-blend-screen flex-shrink-0">
         <div className="h-4/6 relative">
           <img
-            src="https://images.unsplash.com/photo-1554830310-5b57379d04e6?fm=jpg"
+            src={props.artwork}
             alt="Track Cover"
             className="w-full h-full object-cover rounded-sm"
           />
@@ -45,21 +45,23 @@ function trackCard(props) {
           </div>
         </div>
         <div className="h-2/6 mt-2 pl-2 pb-1">
-          <h3 className="text-white font-semibold text-lg">Track Title</h3>
-          <p className="text-gray-400 text-sm">Artist Name</p>
+          <h3 className="text-white font-semibold text-md text-ellipsis h-12">
+            {props.title}
+          </h3>
+          <p className="text-gray-400 text-sm">{props.artist}</p>
         </div>
       </div>
     );
   } else if (CardType === "artist") {
     return (
-      <div className="h-44 w-40 relative">
+      <div className="h-44 w-40 relative cursor-pointer group flex-shrink-0">
         <img
-          src="/music-groove/public/images/artist/maxresdefault.jpg"
+          src={props.image}
           alt="Track Cover"
           className="w-36 h-36 object-cover rounded-full"
         />
         <div className="h-2/6 mt-2 pl-2 pb-1">
-          <h3 className="text-white font-semibold text-lg ">Artist Name</h3>
+          <h3 className="text-white font-semibold text-lg">{props.artist}</h3>
         </div>
       </div>
     );
