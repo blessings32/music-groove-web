@@ -1,6 +1,6 @@
 import React from "react";
 
-function trackCard(props) {
+function TrackCard(props) {
   const { CardType } = props;
   if (CardType === "suggestion") {
     console.log(props);
@@ -17,7 +17,9 @@ function trackCard(props) {
             className="w-full h-max object-cover rounded-sm"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button className="absolute flex justify-center items-center active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300">
+            <button
+              className="absolute flex justify-center items-center active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300"
+            >
               <i className="fas fa-play"></i>
             </button>
           </div>
@@ -39,7 +41,10 @@ function trackCard(props) {
             className="w-full h-full object-cover rounded-sm"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button className="absolute active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300">
+            <button
+      
+              className="absolute active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300"
+            >
               <i className="fas fa-play"></i>
             </button>
           </div>
@@ -68,4 +73,4 @@ function trackCard(props) {
   }
 }
 
-export default trackCard;
+export default TrackCard;

@@ -80,7 +80,70 @@ const Home = () => {
         </div>
       </div>
       {/* audio player controls*/}
-      <div className=" bg-gray-900 h-[14%] w-full rounded-md"></div>
+      <div className=" bg-gray-900 h-[14%] w-full rounded-md p-4  flex flex-col justify-between">
+        {/* Progress bar */}
+        <div className="w-full flex items-center gap-2">
+          <span className="text-gray-400 text-xs">0:00</span>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            className="flex-1 h-1 bg-gray-700 rounded-lg cursor-pointer accent-sky-500"
+          />
+          <span className="text-gray-400 text-xs">3:45</span>
+        </div>
+
+        {/* Now Playing Info */}
+        <div className="w-full flex items-center justify-between mt-2 relative pr-2">
+          <div className="flex items-center gap-4 w-2/12 h-full flex-1 ">
+            <div className="w-12 h-12 bg-gray-800 rounded flex-shrink-0"></div>
+            <div className="flex-1 min-w-0">
+              <div className="text-gray-50 text-sm font-semibold truncate">
+                Now Playing Track
+              </div>
+              <div className="text-gray-400 text-xs truncate">Artist Name</div>
+            </div>
+          </div>
+
+          {/* Playback Controls */}
+          <div className="flex items-center h-full w-full absolute justify-center gap-6">
+            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+              <i className="fa fa-shuffle text-lg"></i>
+            </button>
+            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+              <i className="fa fa-step-backward text-lg"></i>
+            </button>
+            <button className="bg-sky-600 hover:bg-sky-500 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors">
+              <i className="fa fa-play text-lg"></i>
+            </button>
+            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+              <i className="fa fa-step-forward text-lg"></i>
+            </button>
+            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+              <i className="fa fa-repeat text-lg"></i>
+            </button>
+          </div>
+
+          {/* Volume and Playlist - Far Right */}
+          <div className="flex items-center gap-4 w-3/12 justify-end">
+            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+              <i className="fa fa-list text-lg"></i>
+            </button>
+            <div className="flex items-center gap-2 hover:cursor-pointer">
+              <i className="fa fa-volume-down text-gray-400 text-sm"></i>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="80"
+                className="w-20 h-1 bg-gray-700 rounded-lg cursor-pointer accent-sky-500 "
+              />
+              <i className="fa fa-volume-up text-gray-400 text-sm"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
