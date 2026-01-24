@@ -32,7 +32,10 @@ class AudioEngine {
     });
   }
   play(track) {
-    if (!track || !track.location) return;
+    if (!track || !track.location) {
+      console.error("Invalid track or missing location:", track);
+      return;
+    }
 
     if (this.currentTrack?.id !== track.id) {
       console.log("Playing new track:", track.location);
@@ -40,6 +43,7 @@ class AudioEngine {
       this.audio.src = track.location;
       emit(AUDIO_EVENTS.TRACK, track);
     }
+    console.log("Audio play triggered");
     this.audio.play();
   }
 
@@ -59,7 +63,6 @@ class AudioEngine {
     this.audio.play();
   }
   setVolume(volume) {
-    console.log("Setting volume to:", volume);
     this.audio.volume = volume;
     emit(AUDIO_EVENTS.VOLUME, this.audio.volume);
   }

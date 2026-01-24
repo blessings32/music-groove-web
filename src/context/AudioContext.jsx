@@ -16,7 +16,9 @@ export const AudioProvider = ({ children }) => {
   useEffect(() => {
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
-    const handleTrack = (track) => setCurrentTrack(track);
+    const handleTrack = (track) => {
+      setCurrentTrack(track);
+    };
     const handleTime = ({ currentTime, duration }) => {
       setCurrentTime(currentTime);
       setDuration(duration);

@@ -7,6 +7,7 @@ const Home = () => {
   const {
     isPlaying,
     currentTrack,
+    currentTime,
     duration,
     pause,
     resume,
@@ -54,7 +55,13 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="border border-gray-200 h-44 w-[calc(100%-24px)] bottom-3 absolute"></div>
+          <div className=" h-44 w-[calc(100%-24px)] bottom-3 absolute">
+            <img
+              src={currentTrack ? currentTrack.image : null}
+              alt="cover art"
+              className="w-full h-full object-cover round-md"
+            />
+          </div>
         </div>
         <div className="  h-full w-10/12 bg-gray-900 rounded-md">
           <div className="w-full bg-sky-800 h-14 text-2xl font-extrabold text-gray-50 p-3">
@@ -104,27 +111,35 @@ const Home = () => {
       <div className=" bg-gray-900 h-[14%] w-full rounded-md p-4  flex flex-col justify-between">
         {/* Progress bar */}
         <div className="w-full flex items-center gap-2">
-          <span className="text-gray-400 text-xs">0:00</span>
+          <span className="text-gray-400 text-xs">{`${Math.floor(currentTime / 60) ?? 0}:${Math.floor(currentTime % 60) ?? 0}`}</span>
           <input
             type="range"
             min="0"
             max={duration || 0}
-            value={currentTrack || 0}
+            value={currentTime || 0}
             onChange={(e) => seek(Number(e.target.value))}
             className="flex-1 h-1 bg-gray-700 rounded-lg cursor-pointer accent-sky-500"
           />
-          <span className="text-gray-400 text-xs">3:45</span>
+          <span className="text-gray-400 text-xs">{`${Math.floor(duration / 60)}:${Math.floor(duration % 60)}`}</span>
         </div>
 
         {/* Now Playing Info */}
         <div className="w-full flex items-center justify-between mt-2 relative pr-2">
           <div className="flex items-center gap-4 w-2/12 h-full flex-1 ">
-            <div className="w-12 h-12 bg-gray-800 rounded flex-shrink-0"></div>
+            <div className="w-12 h-12 rounded flex-shrink-0">
+              <img
+                src={currentTrack ? currentTrack.image : null}
+                alt="cover art"
+                className="w-full h-full object-cover round-md"
+              />
+            </div>
             <div className="flex-1 min-w-0">
               <div className="text-gray-50 text-sm font-semibold truncate">
-                Now Playing Track
+                {currentTrack ? currentTrack.title : ""}
               </div>
-              <div className="text-gray-400 text-xs truncate">Artist Name</div>
+              <div className="text-gray-400 text-xs truncate">
+                {currentTrack ? currentTrack.artist : ""}
+              </div>
             </div>
           </div>
 
@@ -170,7 +185,6 @@ const Home = () => {
                 value={volume}
                 onChange={(e) => {
                   const newVol = Number(e.target.value);
-                  console.log("Volume changed to:", newVol);
                   setVolume(newVol);
                 }}
                 className="w-20 h-4 z-50 bg-gray-700 rounded-lg accent-sky-500 cursor-pointer"
