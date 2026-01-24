@@ -60,7 +60,7 @@ class AudioEngine {
   }
   setVolume(volume) {
     console.log("Setting volume to:", volume);
-    this.audio.volume = Math.min(Math.max(volume, 0), 1); // Clamp between 0 and 1
+    this.audio.volume = volume;
     emit(AUDIO_EVENTS.VOLUME, this.audio.volume);
   }
   toggleRepeat() {

@@ -160,18 +160,20 @@ const Home = () => {
             <button className="text-gray-400 hover:text-gray-50 transition-colors">
               <i className="fa fa-list text-lg"></i>
             </button>
-            <div className="flex items-center gap-2  border">
+            <div className="flex items-center gap-2  ">
               <i className="fa fa-volume-down text-gray-400 text-sm"></i>
               <input
                 type="range"
                 min="0"
-                max="10"
+                max="1"
+                step="0.01"
                 value={volume}
                 onChange={(e) => {
-                  setVolume(Number(e.target.value));
-                  console.log(volume);
+                  const newVol = Number(e.target.value);
+                  console.log("Volume changed to:", newVol);
+                  setVolume(newVol);
                 }}
-                className="w-20 h-4 bg-gray-700 rounded-lg  accent-sky-500 cursor-pointer"
+                className="w-20 h-4 z-50 bg-gray-700 rounded-lg accent-sky-500 cursor-pointer"
               />
               <i className="fa fa-volume-up text-gray-400 text-sm"></i>
             </div>

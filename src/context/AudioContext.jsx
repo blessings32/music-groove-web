@@ -22,13 +22,15 @@ export const AudioProvider = ({ children }) => {
       setDuration(duration);
     };
     const handleRepeat = (isEnabled) => setIsRepeatEnabled(isEnabled);
-    //const handleVolume = (vol) => setVolume(vol);
+    const handleVolume = (vol) => {
+      setVolume(vol);
+    };
     on(AUDIO_EVENTS.PLAY, handlePlay);
     on(AUDIO_EVENTS.PAUSE, handlePause);
     on(AUDIO_EVENTS.TRACK, handleTrack);
     on(AUDIO_EVENTS.TIME, handleTime);
     on(AUDIO_EVENTS.REPEAT, handleRepeat);
-    //on(AUDIO_EVENTS.VOLUME, handleVolume);
+    on(AUDIO_EVENTS.VOLUME, handleVolume);
 
     return () => {
       off(AUDIO_EVENTS.PLAY, handlePlay);
@@ -36,7 +38,7 @@ export const AudioProvider = ({ children }) => {
       off(AUDIO_EVENTS.TRACK, handleTrack);
       off(AUDIO_EVENTS.TIME, handleTime);
       off(AUDIO_EVENTS.REPEAT, handleRepeat);
-      //off(AUDIO_EVENTS.VOLUME, handleVolume);
+      off(AUDIO_EVENTS.VOLUME, handleVolume);
     };
   }, []);
 
