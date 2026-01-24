@@ -1,8 +1,21 @@
 import Trackard from "../reusable/trackCard.jsx";
 import axios from "../../lib/axios.js";
 import { useState, useEffect } from "react";
+import { useAudio } from "../../context/AudioContext.jsx";
 
 const Home = () => {
+  const {
+    isPlaying,
+    currentTrack,
+    duration,
+    pause,
+    resume,
+    seek,
+    volume,
+    toggleRepeat,
+    setVolume,
+  } = useAudio();
+
   let [suggestedTracks, setSuggestedTracks] = useState([]);
   let [recentTracks, setRecentTracks] = useState([]);
   let [artists, setArtists] = useState([]);
@@ -61,7 +74,11 @@ const Home = () => {
               <div className="flex flex-row gap-5 overflow-x-scroll">
                 {recentTracks.map((track) => {
                   return (
-                    <Trackard key={track.id} CardType="recent" {...track} />
+                    <Trackard
+                      key={track.track_id}
+                      CardType="recent"
+                      {...track}
+                    />
                   );
                 })}
               </div>
@@ -71,7 +88,11 @@ const Home = () => {
               <div className="flex flex-row gap-5 overflow-x-scroll">
                 {artists.map((artist) => {
                   return (
-                    <Trackard key={artist.id} CardType="artist" {...artist} />
+                    <Trackard
+                      key={artist.artist_id}
+                      CardType="artist"
+                      {...artist}
+                    />
                   );
                 })}
               </div>
@@ -87,8 +108,9 @@ const Home = () => {
           <input
             type="range"
             min="0"
-            max="100"
-            value="0"
+            max={duration || 0}
+            value={currentTrack || 0}
+            onChange={(e) => seek(Number(e.target.value))}
             className="flex-1 h-1 bg-gray-700 rounded-lg cursor-pointer accent-sky-500"
           />
           <span className="text-gray-400 text-xs">3:45</span>
@@ -114,13 +136,21 @@ const Home = () => {
             <button className="text-gray-400 hover:text-gray-50 transition-colors">
               <i className="fa fa-step-backward text-lg"></i>
             </button>
-            <button className="bg-sky-600 hover:bg-sky-500 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors">
-              <i className="fa fa-play text-lg"></i>
+            <button
+              onClick={isPlaying ? pause : resume}
+              className="bg-sky-600 hover:bg-sky-500 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+            >
+              <i
+                className={`fa ${isPlaying ? "fa-pause" : "fa-play"} text-lg`}
+              ></i>
             </button>
             <button className="text-gray-400 hover:text-gray-50 transition-colors">
               <i className="fa fa-step-forward text-lg"></i>
             </button>
-            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+            <button
+              onClick={() => toggleRepeat}
+              className="text-gray-400 hover:text-gray-50 transition-colors"
+            >
               <i className="fa fa-repeat text-lg"></i>
             </button>
           </div>
@@ -130,14 +160,18 @@ const Home = () => {
             <button className="text-gray-400 hover:text-gray-50 transition-colors">
               <i className="fa fa-list text-lg"></i>
             </button>
-            <div className="flex items-center gap-2 hover:cursor-pointer">
+            <div className="flex items-center gap-2  border">
               <i className="fa fa-volume-down text-gray-400 text-sm"></i>
               <input
                 type="range"
                 min="0"
-                max="100"
-                value="80"
-                className="w-20 h-1 bg-gray-700 rounded-lg cursor-pointer accent-sky-500 "
+                max="10"
+                value={volume}
+                onChange={(e) => {
+                  setVolume(Number(e.target.value));
+                  console.log(volume);
+                }}
+                className="w-20 h-4 bg-gray-700 rounded-lg  accent-sky-500 cursor-pointer"
               />
               <i className="fa fa-volume-up text-gray-400 text-sm"></i>
             </div>

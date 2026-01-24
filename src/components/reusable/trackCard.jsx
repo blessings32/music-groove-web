@@ -1,10 +1,12 @@
 import React from "react";
+import { useAudio } from "../../context/AudioContext";
 
 function TrackCard(props) {
+  const { play } = useAudio();
+
   const { CardType } = props;
   if (CardType === "suggestion") {
-    console.log(props);
-    let imageLocation = props.image.replace("\\", "");
+    let imageLocation = props.image?.replace("\\", "");
     imageLocation = imageLocation.replace(/\\/g, "/");
     imageLocation = imageLocation.replace(".", "");
 
@@ -18,6 +20,7 @@ function TrackCard(props) {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button
+              onClick={() => play(props)}
               className="absolute flex justify-center items-center active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300"
             >
               <i className="fas fa-play"></i>
@@ -42,7 +45,7 @@ function TrackCard(props) {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button
-      
+              onClick={play(props)}
               className="absolute active:bg-slate-400 w-12 h-12 right-2 bottom-2 bg-gray-200 text-2xl text-black rounded-full hover:bg-gray-300 hover:scale-110 transition-colors duration-300"
             >
               <i className="fas fa-play"></i>
