@@ -26,6 +26,7 @@ const Home = () => {
   let [recentTracks, setRecentTracks] = useState([]);
   let [artists, setArtists] = useState([]);
   let [shuffleEnabled, setShuffleEnabled] = useState(false);
+  let [repeatEnabled, setRepeatEnabled] = useState("ALL");
 
   useEffect(() => {
     axios.get("api/tracks/suggested").then((response) => {
@@ -164,7 +165,7 @@ const Home = () => {
               <i className="fa fa-shuffle text-lg"></i>
             </button>
             <button
-              onClick={() => prev}
+              onClick={() => prev()}
               className="text-gray-400 hover:text-gray-50 transition-colors"
             >
               <i className="fa fa-step-backward text-lg"></i>
@@ -186,11 +187,15 @@ const Home = () => {
             <button
               onClick={() => {
                 toggleRepeat();
-                console.log("Repeat toggled", queueRef.current.repeat);
+                setRepeatEnabled(queueRef.current.repeat);
               }}
               className="text-gray-400 hover:text-gray-50 transition-colors"
             >
-              <i className="fa fa-repeat text-lg"></i>
+              <i
+                className={`fa fa-repeat text-lg ${repeatEnabled === "OFF" ? "text-gray-400" : repeatEnabled === "ALL" ? "text-sky-500" : "text-sky-500 fa-solid fa-repeat-1"}`}
+              >
+                {repeatEnabled === "ONE" && <sub className="text-xs">1</sub>}
+              </i>
             </button>
           </div>
 
