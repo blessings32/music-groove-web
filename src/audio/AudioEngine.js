@@ -43,12 +43,11 @@ class AudioEngine {
       this.audio.src = track.location;
       emit(AUDIO_EVENTS.TRACK, track);
     }
-    console.log("Audio play triggered");
+
     this.audio.play();
   }
 
   seek(time) {
-    console.log("Seeking to time:", time);
     this.audio.currentTime = time;
     emit(AUDIO_EVENTS.TIME, {
       currentTime: this.audio.currentTime,

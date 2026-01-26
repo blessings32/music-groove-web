@@ -14,15 +14,24 @@ const Home = () => {
     seek,
     volume,
     toggleRepeat,
+    toggleShuffle,
     setVolume,
+    initializeQueue,
+    next,
+    prev,
+    queueRef,
   } = useAudio();
 
   let [suggestedTracks, setSuggestedTracks] = useState([]);
   let [recentTracks, setRecentTracks] = useState([]);
   let [artists, setArtists] = useState([]);
+  let [shuffleEnabled, setShuffleEnabled] = useState(false);
+
   useEffect(() => {
     axios.get("api/tracks/suggested").then((response) => {
       setSuggestedTracks(response.data.data);
+      initializeQueue(response.data.data);
+      console.log("Suggested tracks:", response.data.data);
     });
     axios.get("api/tracks/recents").then((response) => {
       setRecentTracks(response.data.data);
@@ -145,10 +154,19 @@ const Home = () => {
 
           {/* Playback Controls */}
           <div className="flex items-center h-full w-full absolute justify-center gap-6">
-            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+            <button
+              onClick={() => {
+                toggleShuffle();
+                setShuffleEnabled(queueRef.current.shuffle);
+              }}
+              className={`${shuffleEnabled ? "text-sky-500" : "text-gray-400"} hover:text-gray-50 transition-colors`}
+            >
               <i className="fa fa-shuffle text-lg"></i>
             </button>
-            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+            <button
+              onClick={() => prev}
+              className="text-gray-400 hover:text-gray-50 transition-colors"
+            >
               <i className="fa fa-step-backward text-lg"></i>
             </button>
             <button
@@ -159,11 +177,17 @@ const Home = () => {
                 className={`fa ${isPlaying ? "fa-pause" : "fa-play"} text-lg`}
               ></i>
             </button>
-            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+            <button
+              onClick={() => next()}
+              className="text-gray-400 hover:text-gray-50 transition-colors"
+            >
               <i className="fa fa-step-forward text-lg"></i>
             </button>
             <button
-              onClick={() => toggleRepeat}
+              onClick={() => {
+                toggleRepeat();
+                console.log("Repeat toggled", queueRef.current.repeat);
+              }}
               className="text-gray-400 hover:text-gray-50 transition-colors"
             >
               <i className="fa fa-repeat text-lg"></i>
