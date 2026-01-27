@@ -2,6 +2,7 @@ import Trackard from "../reusable/trackCard.jsx";
 import axios from "../../lib/axios.js";
 import { useState, useEffect } from "react";
 import { useAudio } from "../../context/AudioContext.jsx";
+import TracksPopup from "../reusable/TracksPopup";
 
 const Home = () => {
   const {
@@ -32,7 +33,6 @@ const Home = () => {
     axios.get("api/tracks/suggested").then((response) => {
       setSuggestedTracks(response.data.data);
       initializeQueue(response.data.data);
-      console.log("Suggested tracks:", response.data.data);
     });
     axios.get("api/tracks/recents").then((response) => {
       setRecentTracks(response.data.data);
@@ -41,6 +41,8 @@ const Home = () => {
       setArtists(response.data.data);
     });
   }, []);
+
+  const [showPopup, setShowPopup] = useState(false);
 
   return (
     <div className="h-full w-full bg-slate-950 flex flex-col space-y-4 p-6 pb-2">
@@ -187,6 +189,12 @@ const Home = () => {
             <button
               onClick={() => {
                 toggleRepeat();
+                console.log(
+                  "repeatenabled: ",
+                  queueRef.current.repeat,
+                  "mode: ",
+                  queueRef.current.mode,
+                );
                 setRepeatEnabled(queueRef.current.repeat);
               }}
               className="text-gray-400 hover:text-gray-50 transition-colors"
@@ -200,7 +208,13 @@ const Home = () => {
           </div>
 
           {/* Volume and Playlist - Far Right */}
-          <div className="flex items-center gap-4 w-3/12 justify-end">
+          <div
+            onClick={() => {
+              setShowPopup(true);
+              console.log("popup opened");
+            }}
+            className="flex items-center gap-4 w-3/12 justify-end hover:cursor-pointer z-50"
+          >
             <button className="text-gray-400 hover:text-gray-50 transition-colors">
               <i className="fa fa-list text-lg"></i>
             </button>
@@ -223,6 +237,12 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <TracksPopup
+        tracks={suggestedTracks}
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        title="Your Playlist"
+      />
     </div>
   );
 };

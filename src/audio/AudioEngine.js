@@ -38,7 +38,6 @@ class AudioEngine {
     }
 
     if (this.currentTrack?.id !== track.id) {
-      console.log("Playing new track:", track.location);
       this.currentTrack = track;
       this.audio.src = track.location;
       emit(AUDIO_EVENTS.TRACK, track);

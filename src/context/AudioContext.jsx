@@ -2,11 +2,18 @@ import { createContext, useContext, useEffect, useState, useRef } from "react";
 import QueueManager from "../audio/queueManager.js";
 import AudioEngine from "../audio/AudioEngine";
 import { on, off, AUDIO_EVENTS } from "../audio/audioEvents.js";
-//import axios from "../lib/axios.js";
+import axios from "../lib/axios.js";
 const AudioContext = createContext();
 
 export const AudioProvider = ({ children }) => {
-  const queueRef = useRef(new QueueManager());
+  const queueRef = useRef(
+    new QueueManager({
+      fetchMore: async () => {
+        const res = await axios.get("api/tracks/suggested/");
+        return res.data.data;
+      },
+    }),
+  );
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,7 +24,6 @@ export const AudioProvider = ({ children }) => {
 
   const handleNext = async () => {
     const nextTrack = await queueRef.current.next();
-    console.log("newtrack: ", nextTrack);
     if (nextTrack) {
       AudioEngine.play(nextTrack);
     }

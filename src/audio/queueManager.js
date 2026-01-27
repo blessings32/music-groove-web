@@ -1,6 +1,5 @@
-import axios from "../lib/axios.js";
 class QueueManager {
-  constructor() {
+  constructor({ fetchMore } = {}) {
     this.past = [];
     this.current = null;
     this.upcoming = [];
@@ -8,11 +7,7 @@ class QueueManager {
     this.shuffle = false;
     this.repeat = "OFF"; // OFF | ONE | ALL;
     this.mode = "RADIO"; // MANUAL | RADIO
-    this.fetchMore = async () => {
-      const res = await axios.get("api/tracks/suggested/");
-      console.log("Fetched more tracks for queue:", res.data.data);
-      return res.data.data;
-    };
+    this.fetchMore = fetchMore || null;
   }
 
   _shuffleArray(arr) {
@@ -65,10 +60,17 @@ class QueueManager {
 
   next() {
     if (this.current && this.upcoming.length === 0) {
+      if (this.mode === "RADIO" && this.fetchMore) {
+        return this._radioNext();
+      }
       return null;
     }
-    if (this.repeat === "ONE") return this.current;
-    if (this.current) this.past.push(this.current);
+    if (this.repeat === "ONE") {
+      return this.current;
+    }
+    if (this.current) {
+      this.past.push(this.current);
+    }
     if (this.upcoming.length > 0) {
       this.current = this.upcoming.shift();
       return this.current;
@@ -79,14 +81,15 @@ class QueueManager {
       this.current = this.upcoming.shift() ?? null;
       return this.current;
     }
-    if (this.mode === "RADIO" && this.fetchMore) return this._radioNext();
-
+    if (this.mode === "RADIO" && this.fetchMore) {
+      return this._radioNext();
+    }
     this.current = null;
     return null;
   }
   async _radioNext() {
     const tracks = await this.fetchMore();
-    const clean = this._dedupe(tracks);
+    const clean = tracks; //this._dedupe(tracks);
     if (this.shuffle) {
       this._shuffleArray(clean);
     }
