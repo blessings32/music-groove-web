@@ -30,10 +30,12 @@ const Home = () => {
   let [repeatEnabled, setRepeatEnabled] = useState("ALL");
 
   useEffect(() => {
-    axios.get("api/tracks/suggested").then((response) => {
-      setSuggestedTracks(response.data.data);
-      initializeQueue(response.data.data);
-    });
+    axios
+      .get("/api/tracks/playlist?id=Default&offset=0&limit=10")
+      .then((response) => {
+        setSuggestedTracks(response.data.data);
+        initializeQueue(response.data.data);
+      });
     axios.get("api/tracks/recents").then((response) => {
       setRecentTracks(response.data.data);
     });
@@ -84,7 +86,11 @@ const Home = () => {
             <div className="flex flex-row gap-5 overflow-x-scroll">
               {suggestedTracks.map((track) => {
                 return (
-                  <Trackard key={track.id} CardType="suggestion" {...track} />
+                  <Trackard
+                    key={track.track_id}
+                    CardType="suggestion"
+                    {...track}
+                  />
                 );
               })}
             </div>

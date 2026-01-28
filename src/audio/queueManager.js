@@ -2,8 +2,10 @@ class QueueManager {
   constructor({ fetchMore } = {}) {
     this.past = [];
     this.current = null;
+    this.playlistId = "Default";
     this.upcoming = [];
     this.counter = 0;
+    this.playlistOffset = 0;
     this.shuffle = false;
     this.repeat = "OFF"; // OFF | ONE | ALL;
     this.mode = "RADIO"; // MANUAL | RADIO
@@ -30,6 +32,8 @@ class QueueManager {
       upcoming: [...this.upcoming],
       shuffle: this.shuffle,
       mode: this.mode,
+      playlistId: this.playlistId,
+      playlistOffset: Number(this.playlistOffset) + 10,
     };
   }
 

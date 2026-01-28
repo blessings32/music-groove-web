@@ -6,9 +6,9 @@ function TrackCard(props) {
 
   const { CardType } = props;
   if (CardType === "suggestion") {
-    let imageLocation = props.image?.replace("\\", "");
-    imageLocation = imageLocation.replace(/\\/g, "/");
-    imageLocation = imageLocation.replace(".", "");
+    let imageLocation = props.image; //?.replace("\\", "");
+    //     imageLocation = imageLocation.replace(/\\/g, "/");
+    //     imageLocation = imageLocation.replace(".", "");
 
     return (
       <div className="relative h-56 w-48 cursor-pointer group mix-blend-screen flex-shrink-0 ">
@@ -39,7 +39,7 @@ function TrackCard(props) {
       <div className="relative h-56 w-36 cursor-pointer group mix-blend-screen flex-shrink-0">
         <div className="h-4/6 relative">
           <img
-            src={props.artwork}
+            src={props.image}
             alt="Track Cover"
             className="w-full h-full object-cover rounded-sm"
           />

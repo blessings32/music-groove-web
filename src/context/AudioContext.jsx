@@ -9,7 +9,14 @@ export const AudioProvider = ({ children }) => {
   const queueRef = useRef(
     new QueueManager({
       fetchMore: async () => {
-        const res = await axios.get("api/tracks/suggested/");
+        const res = await axios.get(
+          "api/tracks/playlist?id=" +
+            queueRef.current.playlistId +
+            "&offset=" +
+            (queueRef.current.playlistOffset === 0
+              ? 0
+              : queueRef.current.playlistOffset),
+        );
         return res.data.data;
       },
     }),
