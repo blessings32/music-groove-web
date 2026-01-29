@@ -9,6 +9,7 @@ export const AudioProvider = ({ children }) => {
   const queueRef = useRef(
     new QueueManager({
       fetchMore: async () => {
+        console.log("offset: ", queueRef.current.playlistOffset);
         const res = await axios.get(
           "api/tracks/playlist?id=" +
             queueRef.current.playlistId +
@@ -85,6 +86,9 @@ export const AudioProvider = ({ children }) => {
     return queueRef.current.toggleShuffle();
   };
   const api = {
+    nextPlaylist: () => {
+      return queueRef.current.playlistNext();
+    },
     initializeQueue: (tracks) => {
       queueRef.current.load(tracks);
     },
@@ -94,7 +98,9 @@ export const AudioProvider = ({ children }) => {
     prev: () => {
       handlePrev();
     },
-    play: (track) => AudioEngine.play(track),
+    play: (track) => {
+      AudioEngine.play(track);
+    },
     pause: () => AudioEngine.pause(),
     resume: () => AudioEngine.resume(),
     seek: (time) => {

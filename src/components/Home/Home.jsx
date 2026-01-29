@@ -31,8 +31,9 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("/api/tracks/playlist?id=Default&offset=0&limit=10")
+      .get("/api/tracks/playlist/") //playlist?id=Default&offset=0&limit=10"
       .then((response) => {
+        console.log(response.data.data);
         setSuggestedTracks(response.data.data);
         initializeQueue(response.data.data);
       });
@@ -214,17 +215,17 @@ const Home = () => {
           </div>
 
           {/* Volume and Playlist - Far Right */}
-          <div
-            onClick={() => {
-              setShowPopup(true);
-              console.log("popup opened");
-            }}
-            className="flex items-center gap-4 w-3/12 justify-end hover:cursor-pointer z-50"
-          >
-            <button className="text-gray-400 hover:text-gray-50 transition-colors">
+          <div className="flex items-center gap-4 w-3/12 justify-end hover:cursor-pointer z-50">
+            <button
+              onClick={() => {
+                setShowPopup(true);
+                console.log("popup opened");
+              }}
+              className="text-gray-400 hover:text-gray-50 transition-colors"
+            >
               <i className="fa fa-list text-lg"></i>
             </button>
-            <div className="flex items-center gap-2  ">
+            <div className="flex items-center gap-2">
               <i className="fa fa-volume-down text-gray-400 text-sm"></i>
               <input
                 type="range"

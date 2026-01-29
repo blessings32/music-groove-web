@@ -37,7 +37,7 @@ class AudioEngine {
       return;
     }
 
-    if (this.currentTrack?.id !== track.id) {
+    if (this.currentTrack?.track_id !== track.track_id) {
       this.currentTrack = track;
       this.audio.src = track.location;
       emit(AUDIO_EVENTS.TRACK, track);

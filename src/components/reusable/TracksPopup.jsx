@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useAudio } from "../../context/AudioContext";
 
 function TracksPopup({ tracks, isOpen, onClose, title = "Tracks" }) {
-  const { play, queueRef } = useAudio();
+  const { play, queueRef, nextPlaylist } = useAudio();
   const popupRef = useRef(null);
+
   tracks = queueRef.current.getState().upcoming || tracks;
   tracks = [queueRef.current.getState().current, ...tracks];
   // Close popup when clicking outside
@@ -165,6 +166,16 @@ function TracksPopup({ tracks, isOpen, onClose, title = "Tracks" }) {
           <span className="text-gray-400 text-sm">
             {tracks ? tracks.length : 0} tracks
           </span>
+
+          <button
+            onClick={() => {
+              nextPlaylist();
+            }}
+            className="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-full transition-colors duration-300 flex items-center gap-2"
+          >
+            <i className="fa fa-forward"></i>
+          </button>
+
           <button
             onClick={() => {
               if (tracks && tracks.length > 0) {

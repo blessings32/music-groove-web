@@ -26,10 +26,13 @@ class QueueManager {
     return tracks.filter((t) => !seen.has(t.track_id));
   }
   getState() {
+    // Ensure upcoming is always an array
+    const upcomingArr = Array.isArray(this.upcoming) ? this.upcoming : [];
+    const pastArr = Array.isArray(this.past) ? this.past : [];
     return {
-      past: [...this.past],
+      past: [...pastArr],
       current: this.current,
-      upcoming: [...this.upcoming],
+      upcoming: [...upcomingArr],
       shuffle: this.shuffle,
       mode: this.mode,
       playlistId: this.playlistId,
@@ -86,16 +89,29 @@ class QueueManager {
       return this.current;
     }
     if (this.mode === "RADIO" && this.fetchMore) {
+      this.playlistOffset += 10;
       return this._radioNext();
     }
     this.current = null;
     return null;
   }
+  async playlistNext() {
+    this.playlistOffset += 10;
+    // Ensure upcoming is an array before spreading
+    this.past = Array.isArray(this.upcoming) ? [...this.upcoming] : [];
+    this.upcoming = [];
+    await this._radioNext();
+    return this.upcoming;
+  }
   async _radioNext() {
     const tracks = await this.fetchMore();
-    const clean = tracks; //this._dedupe(tracks);
+    const clean = this._dedupe(tracks);
     if (this.shuffle) {
       this._shuffleArray(clean);
+    }
+    // Ensure upcoming is an array before pushing
+    if (!Array.isArray(this.upcoming)) {
+      this.upcoming = [];
     }
     this.upcoming.push(...clean);
     this.current = this.upcoming.shift() ?? null;
