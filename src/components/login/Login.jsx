@@ -106,6 +106,7 @@ const Login = () => {
               type="text"
               id="login-username"
               name="username"
+              autoComplete="username"
               placeholder="username"
               required
             />
@@ -121,6 +122,7 @@ const Login = () => {
               type="password"
               id="login-password"
               name="password"
+              autoComplete="current-password"
               placeholder="password"
               required
             />
@@ -171,6 +173,7 @@ const Login = () => {
               type="text"
               id="register-username"
               name="username"
+              autoComplete="username"
               placeholder="username"
               required
             />
@@ -190,6 +193,7 @@ const Login = () => {
               id="register-email"
               name="email"
               placeholder="email"
+              autoComplete="email"
               required
             />
           </div>
@@ -208,6 +212,7 @@ const Login = () => {
               id="register-password"
               name="password"
               placeholder="password"
+              autoComplete="new-password"
               required
             />
           </div>
@@ -227,6 +232,7 @@ const Login = () => {
               name="confirmPassword"
               placeholder="confirm password"
               required
+              autoComplete="new-password"
             />
           </div>
           <button

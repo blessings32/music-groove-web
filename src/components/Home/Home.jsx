@@ -3,7 +3,9 @@ import axios from "../../lib/axios.js";
 import { useState, useEffect } from "react";
 import { useAudio } from "../../context/AudioContext.jsx";
 import TracksPopup from "../reusable/TracksPopup";
-
+import Landing from "./Landing.jsx";
+import { Routes, Route, Link } from "react-router-dom";
+import Library from "../Library/Library.jsx";
 const Home = () => {
   const {
     isPlaying,
@@ -22,7 +24,6 @@ const Home = () => {
     prev,
     queueRef,
   } = useAudio();
-
   let [suggestedTracks, setSuggestedTracks] = useState([]);
   let [recentTracks, setRecentTracks] = useState([]);
   let [artists, setArtists] = useState([]);
@@ -50,23 +51,32 @@ const Home = () => {
   return (
     <div className="h-full w-full bg-slate-950 flex flex-col space-y-4 p-6 pb-2">
       <div className=" h-[86%] w-full flex flex-row space-x-4 p-1">
-        <div className=" h-full w-2/12 bg-gray-900 rounded-md relative p-3">
+        <div className=" h-full w-2/12 bg-neutral-800 rounded-md relative p-3">
           <div className="text-gray-50 text-xl pl-3">
             <div>
-              <button className="transition-transform hover:scale-95 ease-linear duration-75">
+              <Link
+                to="/"
+                className="transition-transform hover:scale-95 ease-linear duration-75"
+              >
                 <i className="fa fa-house w-8 text-left"></i>Home
-              </button>
+              </Link>
             </div>
             <div>
-              <button className="transition-transform hover:scale-95 ease-linear duration-75">
+              <Link
+                to="/library"
+                className="transition-transform hover:scale-95 ease-linear duration-75"
+              >
                 <i id="fabars" className="fa fa-bars  w-8 text-left"></i>
                 Library
-              </button>
+              </Link>
             </div>
             <div>
-              <button className="transition-transform hover:scale-95 ease-linear duration-75">
+              <Link
+                to="/search"
+                className="transition-transform hover:scale-95 ease-linear duration-75"
+              >
                 <i className="fa fa-search  w-8 text-left"></i>Search
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -78,56 +88,26 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className="  h-full w-10/12 bg-gray-900 rounded-md">
+        <div className="  h-full w-10/12 bg-neutral-900 rounded-md">
           <div className="w-full bg-sky-800 h-14 text-2xl font-extrabold text-gray-50 p-3">
             <h1>ZXENON</h1>
           </div>
           {/*below are sections suggested tracks, lecent played, suggested playlist, artist*/}
-          <div className="w-full h-[calc(100%-3.5rem)] overflow-y-scroll p-4">
-            <div className="flex flex-row gap-5 overflow-x-scroll">
-              {suggestedTracks.map((track) => {
-                return (
-                  <Trackard
-                    key={track.track_id}
-                    CardType="suggestion"
-                    {...track}
-                  />
-                );
-              })}
-            </div>
-            <div>
-              <h1 className="text-xl text-gray-300 pb-4">Recent Plays {">"}</h1>
-              <div className="flex flex-row gap-5 overflow-x-scroll">
-                {recentTracks.map((track) => {
-                  return (
-                    <Trackard
-                      key={track.track_id}
-                      CardType="recent"
-                      {...track}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div>
-              <h1 className="text-xl text-gray-300 pb-4">Artits {">"}</h1>
-              <div className="flex flex-row gap-5 overflow-x-scroll">
-                {artists.map((artist) => {
-                  return (
-                    <Trackard
-                      key={artist.artist_id}
-                      CardType="artist"
-                      {...artist}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Landing
+                  properties={{ suggestedTracks, recentTracks, artists }}
+                />
+              }
+            />
+            <Route path="/library/*" element={<Library />} />
+          </Routes>
         </div>
       </div>
       {/* audio player controls*/}
-      <div className=" bg-gray-900 h-[14%] w-full rounded-md p-4  flex flex-col justify-between">
+      <div className=" bg-neutral-900 h-[14%] w-full rounded-md p-4  flex flex-col justify-between">
         {/* Progress bar */}
         <div className="w-full flex items-center gap-2">
           <span className="text-gray-400 text-xs">{`${Math.floor(currentTime / 60) ?? 0}:${Math.floor(currentTime % 60) ?? 0}`}</span>
