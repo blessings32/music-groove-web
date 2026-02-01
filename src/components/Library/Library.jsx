@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import Liked from "./Liked";
 
 function Library() {
   return (
@@ -30,16 +31,9 @@ function Library() {
           Albums
         </Link>
       </div>
-      <div className="bg-red-600 h-8 w-full">
+      <div className="w-full">
         <Routes>
-          <Route
-            path="/liked"
-            element={
-              <div className="text-white-300 text-xl">
-                Your Library is Empty 1
-              </div>
-            }
-          />
+          <Route path="/liked" element={<Liked />} />
           <Route
             path="/playlists"
             element={
@@ -64,14 +58,7 @@ function Library() {
               </div>
             }
           />
-          <Route
-            path="/"
-            element={
-              <div className="text-white-300 text-xl">
-                Your Library is Empty 1
-              </div>
-            }
-          />
+          <Route path="/" element={<Liked />} />
         </Routes>
       </div>
     </div>

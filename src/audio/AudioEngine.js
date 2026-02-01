@@ -1,4 +1,5 @@
 import { emit, AUDIO_EVENTS } from "../audio/audioEvents";
+import { toAbsolutePath } from "../lib/utils.js";
 
 class AudioEngine {
   constructor() {
@@ -39,7 +40,7 @@ class AudioEngine {
 
     if (this.currentTrack?.track_id !== track.track_id) {
       this.currentTrack = track;
-      this.audio.src = track.location;
+      this.audio.src = toAbsolutePath(track.location);
       emit(AUDIO_EVENTS.TRACK, track);
     }
 

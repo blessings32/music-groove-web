@@ -6,6 +6,7 @@ import TracksPopup from "../reusable/TracksPopup";
 import Landing from "./Landing.jsx";
 import { Routes, Route, Link } from "react-router-dom";
 import Library from "../Library/Library.jsx";
+import { toAbsolutePath } from "../../lib/utils.js";
 const Home = () => {
   const {
     isPlaying,
@@ -82,7 +83,7 @@ const Home = () => {
 
           <div className=" h-44 w-[calc(100%-24px)] bottom-3 absolute">
             <img
-              src={currentTrack ? currentTrack.image : null}
+              src={currentTrack ? toAbsolutePath(currentTrack.image) : null}
               alt="cover art"
               className="w-full h-full object-cover round-md"
             />
@@ -127,7 +128,7 @@ const Home = () => {
           <div className="flex items-center gap-4 w-2/12 h-full flex-1 ">
             <div className="w-12 h-12 rounded flex-shrink-0">
               <img
-                src={currentTrack ? currentTrack.image : null}
+                src={currentTrack ? toAbsolutePath(currentTrack.image) : null}
                 alt="cover art"
                 className="w-full h-full object-cover round-md"
               />
