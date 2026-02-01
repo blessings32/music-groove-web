@@ -76,14 +76,14 @@ function Liked() {
                 alt="Liked Songs"
                 className="h-4 w-4 float-left mr-4 object-cover"
               />{" "}
-              {track.title}
+              <span className="hover:underline">{track.title}</span>
             </div>
             <div className="w-3/12  text-gray-400 hover:bg-gray-800 rounded-sm p-2">
-              {track.artist}
+              <span className="hover:underline">{track.artist}</span>
             </div>
 
             <div className="w-4/12  text-gray-400 hover:bg-gray-800 rounded-sm p-2">
-              {track.album}
+              <span className="hover:underline">{track.album}</span>
             </div>
             <div className="w-1/12  text-right text-gray-400 p-2">
               {track.duration}
