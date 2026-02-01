@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useAudio } from "../../context/AudioContext";
 
 function TrackCard(props) {
-  const { play } = useAudio();
+  const { play, likeTrack, unLikeTrack } = useAudio();
   const [showMenu, setShowMenu] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
@@ -13,7 +13,11 @@ function TrackCard(props) {
     e.stopPropagation();
     setIsLiked(!isLiked);
     setShowMenu(false);
-    // Add API call to save like status here
+    if (!isLiked) {
+      likeTrack(props);
+    } else {
+      unLikeTrack(props);
+    }
   };
 
   const handleMenuToggle = (e) => {

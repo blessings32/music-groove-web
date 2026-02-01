@@ -4,6 +4,7 @@ import AudioEngine from "../audio/AudioEngine";
 import { on, off, AUDIO_EVENTS } from "../audio/audioEvents.js";
 import axios from "../lib/axios.js";
 const AudioContext = createContext();
+import { setRecentlyPlayed, unLikeTrack, likeTrack } from "../lib/utils.js";
 
 export const AudioProvider = ({ children }) => {
   const queueRef = useRef(
@@ -99,7 +100,12 @@ export const AudioProvider = ({ children }) => {
       handlePrev();
     },
     play: (track) => {
-      AudioEngine.play(track);
+      try {
+        setRecentlyPlayed(track);
+        AudioEngine.play(track);
+      } catch (error) {
+        console.error("Error setting recently played track:", error);
+      }
     },
     pause: () => AudioEngine.pause(),
     resume: () => AudioEngine.resume(),
@@ -124,6 +130,8 @@ export const AudioProvider = ({ children }) => {
         duration,
         volume,
         isRepeatEnabled,
+        unLikeTrack,
+        likeTrack,
       }}
     >
       {children}
