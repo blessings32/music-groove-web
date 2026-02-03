@@ -89,8 +89,8 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className="  h-full w-10/12 bg-neutral-900 rounded-md">
-          <div className="w-full bg-sky-800 h-14 text-2xl font-extrabold text-gray-50 p-3">
+        <div className="  h-full w-10/12 bg-neutral-900">
+          <div className="w-full bg-sky-800 h-11 text-xl font-extrabold text-gray-50 p-1 pt-2 pl-3">
             <h1>ZXENON</h1>
           </div>
           {/*below are sections suggested tracks, lecent played, suggested playlist, artist*/}

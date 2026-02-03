@@ -15,7 +15,7 @@ function Liked() {
       .catch((err) => console.error("error fetching liked songs ", err));
   }, []);
   return (
-    <div className="w-full flex-col space-y-2">
+    <div className="w-full flex-col space-y-2 p-3">
       <div className="h-28 p-1 text-white-300 text-xl w-full space-y-0 ">
         {tracks[0]?.image ? (
           <img
