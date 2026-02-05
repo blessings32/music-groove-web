@@ -2,6 +2,15 @@
 
 A modern, responsive music streaming web application built with React and Vite. Enjoy seamless music playback with an intuitive user interface.
 
+> **🔗 Backend Repository:** This frontend works with the [Music Groove API](https://github.com/blessings32/music-groove-api.git) backend server.
+
+## 🔗 Related Projects
+
+| Repository                                                              | Description                            |
+| ----------------------------------------------------------------------- | -------------------------------------- |
+| [music-groove-web](https://github.com/blessings32/music-groove-web.git) | Frontend React application (this repo) |
+| [music-groove-api](https://github.com/blessings32/music-groove-api.git) | Backend API server                     |
+
 ![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=flat&logo=react)
 ![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=flat&logo=vite)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.19-06B6D4?style=flat&logo=tailwindcss)
